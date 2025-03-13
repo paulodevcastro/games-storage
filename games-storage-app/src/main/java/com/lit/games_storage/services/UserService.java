@@ -1,31 +1,34 @@
 package com.lit.games_storage.services;
 
+import com.lit.games_storage.dtos.LoginRequestDTO;
+import com.lit.games_storage.dtos.RegisterRequestDTO;
 import com.lit.games_storage.models.UserModel;
 import com.lit.games_storage.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado: " + username));
+    public UserModel registerUser(RegisterRequestDTO register){
+        UserModel newUser = new UserModel();
+        newUser.setFirstName(register.getFirstName());
+        newUser.setLastName(register.getLastName());
+        newUser.setEmail(register.getEmail());
+        newUser.setUsername(register.getUsername());
+        newUser.setPassword(passwordEncoder.encode(register.getPassword()));
+        return userRepository.save(newUser);
     }
 
-    public UserModel saveUser(UserModel userModel) {
-        userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        return userRepository.save(userModel);
+    public Optional<LoginRequestDTO> getUserById(Long id){
+        return userRepository.findById(id)
+                .map(userModel -> new LoginRequestDTO());
     }
-
 }
