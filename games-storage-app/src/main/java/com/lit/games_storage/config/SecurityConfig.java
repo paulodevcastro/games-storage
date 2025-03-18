@@ -35,13 +35,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth
-                        -> auth.requestMatchers("/h2-console/**", "/api/auth/**")
+                        -> auth.requestMatchers("/h2-console/**", "/api/auth/**", "/api/users/**")
                         .permitAll().anyRequest().authenticated())
                 .headers(header
                         -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(withDefaults()).httpBasic(withDefaults())
                 .csrf(csrf
-                        -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/auth/**"))
+                        -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/auth/**", "/api/users/**"))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -1,7 +1,7 @@
 package com.lit.games_storage.services;
 
-import com.lit.games_storage.dtos.LoginRequestDTO;
 import com.lit.games_storage.dtos.RegisterRequestDTO;
+import com.lit.games_storage.dtos.UserDTO;
 import com.lit.games_storage.models.UserModel;
 import com.lit.games_storage.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,16 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public Optional<LoginRequestDTO> getUserById(Long id){
+    public Optional<UserDTO> getUserById(Long id){
         return userRepository.findById(id)
-                .map(userModel -> new LoginRequestDTO());
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setId(user.getId());
+                    dto.setFirstName(user.getFirstName());
+                    dto.setLastName(user.getLastName());
+                    dto.setEmail(user.getEmail());
+                    dto.setUsername(user.getUsername());
+                    return dto;
+                });
     }
 }
