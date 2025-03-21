@@ -5,6 +5,7 @@ import com.lit.games_storage.dtos.UserDTO;
 import com.lit.games_storage.models.UserModel;
 import com.lit.games_storage.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +40,23 @@ public class UserService {
                     return dto;
                 });
     }
+
+    public UserDTO updateUser(Long id, UserDTO dto){
+        UserModel user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setUsername(dto.getUsername());
+
+        UserModel updatedUser = userRepository.save(user);
+
+        return new UserDTO(updatedUser.getId(),
+                updatedUser.getFirstName(),
+                updatedUser.getLastName(),
+                updatedUser.getEmail(),
+                updatedUser.getUsername());
+    }
+
 }
