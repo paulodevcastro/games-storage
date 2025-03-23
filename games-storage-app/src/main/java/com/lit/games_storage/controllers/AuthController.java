@@ -3,6 +3,7 @@ package com.lit.games_storage.controllers;
 import com.lit.games_storage.dtos.AuthResponseDTO;
 import com.lit.games_storage.dtos.LoginRequestDTO;
 import com.lit.games_storage.dtos.RegisterRequestDTO;
+import com.lit.games_storage.dtos.UserDTO;
 import com.lit.games_storage.models.UserModel;
 import com.lit.games_storage.repositories.UserRepository;
 import com.lit.games_storage.security.JwtUtil;

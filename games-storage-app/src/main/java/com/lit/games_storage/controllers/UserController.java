@@ -22,7 +22,7 @@ public class UserController {
         Optional<UserDTO> userDTOOptional = userService.getUserById(id);
         return userDTOOptional.<ResponseEntity<Object>>map(
                 userDTO -> ResponseEntity.status(HttpStatus.OK).body(userDTO)).orElseGet(
-                        () -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ops! This user don't exist!"));
+                        () -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Esse usuário não existe!"));
     }
 
     @PutMapping("/{id}")
