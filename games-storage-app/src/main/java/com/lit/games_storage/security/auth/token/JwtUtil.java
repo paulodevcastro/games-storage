@@ -1,4 +1,4 @@
-package com.lit.games_storage.security;
+package com.lit.games_storage.security.auth.token;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

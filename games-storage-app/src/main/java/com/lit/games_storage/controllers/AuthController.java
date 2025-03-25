@@ -1,12 +1,11 @@
 package com.lit.games_storage.controllers;
 
-import com.lit.games_storage.dtos.AuthResponseDTO;
+import com.lit.games_storage.dtos.TokenResponseDTO;
 import com.lit.games_storage.dtos.LoginRequestDTO;
 import com.lit.games_storage.dtos.RegisterRequestDTO;
-import com.lit.games_storage.dtos.UserDTO;
 import com.lit.games_storage.models.UserModel;
 import com.lit.games_storage.repositories.UserRepository;
-import com.lit.games_storage.security.JwtUtil;
+import com.lit.games_storage.security.auth.token.JwtUtil;
 import com.lit.games_storage.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +38,9 @@ public class AuthController {
                 )
         );
 
+        // Instanciando token
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtil.generateAccessToken(loginRequestDTO.getUsername());
-        return ResponseEntity.ok(new AuthResponseDTO(jwt));
+        return ResponseEntity.ok(new TokenResponseDTO(jwtUtil.generateAccessToken(loginRequestDTO.getUsername())));
     }
 
     @PostMapping("/register")

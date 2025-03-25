@@ -1,4 +1,4 @@
-package com.lit.games_storage.security;
+package com.lit.games_storage.security.auth.token;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

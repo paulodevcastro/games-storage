@@ -1,4 +1,4 @@
-package com.lit.games_storage.services;
+package com.lit.games_storage.security.customer;
 
 import com.lit.games_storage.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
