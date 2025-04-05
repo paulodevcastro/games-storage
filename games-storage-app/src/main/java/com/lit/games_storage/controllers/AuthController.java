@@ -4,7 +4,6 @@ import com.lit.games_storage.dtos.TokenResponseDTO;
 import com.lit.games_storage.dtos.LoginRequestDTO;
 import com.lit.games_storage.dtos.RegisterRequestDTO;
 import com.lit.games_storage.models.UserModel;
-import com.lit.games_storage.repositories.UserRepository;
 import com.lit.games_storage.security.auth.token.JwtUtil;
 import com.lit.games_storage.services.UserService;
 import jakarta.validation.Valid;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final UserService userService;
 
